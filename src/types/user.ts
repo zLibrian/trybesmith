@@ -4,3 +4,10 @@ export type User = {
   level: number,
   password: string, 
 };
+
+export type AddedUser = User & {
+  id: number,
+};
+export type Token = {
+  token: string
+};
