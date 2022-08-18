@@ -8,6 +8,10 @@ const productController = {
     const insertedProduct = await productService.create({ name, amount });
     return res.status(201).json(insertedProduct);
   },
+  list: async (req: Request, res: Response, _next: NextFunction) => {
+    const products = await productService.list();
+    return res.status(200).json(products);
+  },
 };
 
 export default productController;
