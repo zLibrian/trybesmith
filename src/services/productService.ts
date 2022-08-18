@@ -6,5 +6,9 @@ const productService = {
     const insertedProduct = await productModel.create(product);
     return insertedProduct;
   },
+  list: async ():Promise<Product[]> => {
+    const products = await productModel.list();
+    return products;
+  },  
 };
 export default productService;
