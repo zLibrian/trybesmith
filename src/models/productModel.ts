@@ -14,6 +14,11 @@ const productModel = {
     const insertedProduct:AddedProduct = { id: insertId, ...product };
     return insertedProduct;
   },
+  list: async ():Promise<Product[]> => {
+    const listSql = 'SELECT * FROM Trybesmith.Products;';
+    const [products] = await connection.execute(listSql);
+    return products as Product[];
+  },
 };
 
 export default productModel;
