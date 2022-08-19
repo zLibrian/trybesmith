@@ -1,17 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
-
-type ErrorMap = {
-  [key: string]: { message: string, code: number }
-};
+import errorMap from '../utils/customErrorMessages';
 
 const errorHandler = (err: Error, req: Request, res: Response, _next: NextFunction) => {
-  if (Joi.isError(err)) return res.status(400).json({ message: err.message });
-
-  const errorMap:ErrorMap = {
-    INVALID_CREDENTIALS: { message: 'Username or password invalid', code: 401 },
-  };
-
+  if (Joi.isError(err)) {
+    const [code, message] = err.message.split('|');
+    return res.status(parseInt(code, 10)).json({ message });
+  }
+  
   const customError = errorMap[err.message];
   if (customError) return res.status(customError.code).json({ message: customError.message });
 
