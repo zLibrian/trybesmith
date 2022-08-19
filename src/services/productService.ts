@@ -9,6 +9,10 @@ const productService = {
   list: async ():Promise<Product[]> => {
     const products = await productModel.list();
     return products;
-  },  
+  },
+  update: async (productsIds: Array<number>, orderId: number) => {
+    await Promise.all(productsIds
+      .map((productId: Product['id']) => productModel.update(orderId, productId)));
+  },
 };
 export default productService;

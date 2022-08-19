@@ -1,3 +1,4 @@
+import { ResultSetHeader } from 'mysql2';
 import { Order } from '../types/order';
 import connection from './connection';
 
@@ -10,6 +11,12 @@ const orderModel = {
       GROUP BY o.id ORDER BY o.userId;`;
     const [orders] = await connection.execute(listSql);
     return orders as Order[];
+  },
+  create: async (userId: number):Promise<number> => {
+    const insertOrder = 'INSERT INTO Trybesmith.Orders(userId) VALUES (?)';
+    const [{ insertId }] = await connection
+      .execute<ResultSetHeader>(insertOrder, [userId]);
+    return insertId;
   },
 };
 

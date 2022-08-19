@@ -19,6 +19,10 @@ const productModel = {
     const [products] = await connection.execute(listSql);
     return products as Product[];
   },
+  update: async (orderId:number, productId:number):Promise<void> => {
+    const updateSql = 'UPDATE Trybesmith.Products SET orderId = ? where id = ?';
+    await connection.execute(updateSql, [orderId, productId]);
+  },
 };
 
 export default productModel;
